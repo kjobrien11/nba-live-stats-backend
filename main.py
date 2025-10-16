@@ -20,14 +20,68 @@ app.add_middleware(
 )
 
 @app.get("/todays-games")
-def get_todays_game_ids():
-    todays_games = set_todays_games()
+def todays_games():
+    todays_games = get_todays_games()
     return todays_games
-    
-def set_todays_games():
+
+@app.get("/todays-games-ids")
+def todays_games_ids():
+    return get_todays_games_id()
+
+@app.get("/todays-games-boxscores")
+def todays_games_boxscores():
+    return get_todays_games_boxscore()
+
+def get_todays_games_boxscore():
+    gameIds = get_todays_games_id()
+
+    boxscores = []
+
+    # for i in range(len(gameIds)):
+    for i in range(2):
+        print(i)
+
+        current_game = boxscore.BoxScore(gameIds[i]).get_dict()["game"]
+        home_team = current_game["homeTeam"]
+        away_team = current_game["awayTeam"]
+        boxscores.append({
+            "gameStatusText" : current_game["gameStatusText"],
+            "homeScore" : home_team["score"],
+            "homeInBonus" : home_team["inBonus"],
+            "homeTimeoutsRemaining" : home_team["timeoutsRemaining"],
+            "homeTeamAssists" : home_team["statistics"]["assists"],
+            "homeTeamRebounds" : home_team["statistics"]["reboundsPersonal"],
+            "homeTeamOffensiveRebounds" : home_team["statistics"]["reboundsOffensive"],
+            "homeTeamDefensiveRebounds" : home_team["statistics"]["reboundsDefensive"],
+            "homeTeamTurnovers" : home_team["statistics"]["turnoversTotal"],
+            "awayScore" : away_team["score"],
+            "awayInBonus" : away_team["inBonus"],
+            "awayTimeoutsRemaining" : away_team["timeoutsRemaining"],
+            "awayTeamAssists" : away_team["statistics"]["assists"],
+            "awayTeamRebounds" : away_team["statistics"]["reboundsPersonal"],
+            "awayTeamOffensiveRebounds" : away_team["statistics"]["reboundsOffensive"],
+            "awayTeamDefensiveRebounds" : away_team["statistics"]["reboundsDefensive"],
+            "awayTeamTurnovers" : away_team["statistics"]["turnoversTotal"],
+        })
+
+    return boxscores
+
+
+
+def get_todays_games_id():
+
     response = scoreboard.ScoreBoard().get_dict()["scoreboard"]["games"]
     games = []
-    print(response)
+
+    for i in range(len(response)):
+        games.append(response[i]["gameId"])
+
+    return games
+
+    
+def get_todays_games():
+    response = scoreboard.ScoreBoard().get_dict()["scoreboard"]["games"]
+    games = []
 
     for i in range(len(response)):
         games.append(
@@ -39,8 +93,7 @@ def set_todays_games():
                 "awayTeam": response[i]["awayTeam"]["teamName"],
                 "awayTeamWins":  response[i]["awayTeam"]["wins"],
                 "awayTeamLoses": response[i]["awayTeam"]["losses"],
-            }
-            )
+            })
 
     return games
 
