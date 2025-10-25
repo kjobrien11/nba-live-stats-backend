@@ -47,6 +47,9 @@ def get_todays_games_boxscore():
         "homeTeamOffensiveRebounds": 0,
         "homeTeamDefensiveRebounds": 0,
         "homeTeamTurnovers": 0,
+        "homeTeamSteals": 0,
+        "homeTeamBlocks": 0,
+        "homeTeamFTPercentage" :"0%" ,
         "awayScore": 0,
         "awayInBonus": False,
         "awayTimeoutsRemaining": 7,
@@ -55,6 +58,9 @@ def get_todays_games_boxscore():
         "awayTeamOffensiveRebounds": 0,
         "awayTeamDefensiveRebounds": 0,
         "awayTeamTurnovers": 0,
+        "awayTeamSteals": 0,
+        "awayTeamBlocks": 0,
+        "awayTeamFTPercentage" :"0%" ,
     }
 
     for game_id in gameIds:
@@ -75,6 +81,10 @@ def get_todays_games_boxscore():
                 "homeTeamOffensiveRebounds": home_team["statistics"]["reboundsOffensive"],
                 "homeTeamDefensiveRebounds": home_team["statistics"]["reboundsDefensive"],
                 "homeTeamTurnovers": home_team["statistics"]["turnoversTotal"],
+                "homeTeamSteals": home_team["statistics"]["steals"],
+                "homeTeamBlocks": home_team["statistics"]["blocks"],
+                "homeTeamFTPercentage": f"{home_team['statistics']['freeThrowsPercentage'] * 100:.1f}%",
+
                 "awayScore": away_team["score"],
                 "awayInBonus": away_team["inBonus"],
                 "awayTimeoutsRemaining": away_team["timeoutsRemaining"],
@@ -83,6 +93,9 @@ def get_todays_games_boxscore():
                 "awayTeamOffensiveRebounds": away_team["statistics"]["reboundsOffensive"],
                 "awayTeamDefensiveRebounds": away_team["statistics"]["reboundsDefensive"],
                 "awayTeamTurnovers": away_team["statistics"]["turnoversTotal"],
+                "awayTeamSteals": away_team["statistics"]["steals"],
+                "awayTeamBlocks": away_team["statistics"]["blocks"],
+                "awayTeamFTPercentage": f"{away_team['statistics']['freeThrowsPercentage'] * 100:.1f}%"
             })
 
         boxscores.append(game_stats)
