@@ -83,7 +83,7 @@ def get_todays_games_boxscore():
                 "homeTeamTurnovers": home_team["statistics"]["turnoversTotal"],
                 "homeTeamSteals": home_team["statistics"]["steals"],
                 "homeTeamBlocks": home_team["statistics"]["blocks"],
-                "homeTeamFTPercentage": f"{home_team['statistics']['freeThrowsPercentage'] * 100:.1f}%",
+                "homeTeamFTPercentage": f"{int(home_team['statistics']['freeThrowsPercentage'] * 100)}%",
 
                 "awayScore": away_team["score"],
                 "awayInBonus": away_team["inBonus"],
@@ -95,7 +95,7 @@ def get_todays_games_boxscore():
                 "awayTeamTurnovers": away_team["statistics"]["turnoversTotal"],
                 "awayTeamSteals": away_team["statistics"]["steals"],
                 "awayTeamBlocks": away_team["statistics"]["blocks"],
-                "awayTeamFTPercentage": f"{away_team['statistics']['freeThrowsPercentage'] * 100:.1f}%"
+                "awayTeamFTPercentage": f"{int(away_team['statistics']['freeThrowsPercentage'] * 100)}%"
             })
 
         boxscores.append(game_stats)
